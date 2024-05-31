@@ -8,6 +8,7 @@ import {
   TransactionId,
   AccountBalanceQuery,
   HbarUnit,
+  AccountBalance as HederaAccountBalance,
 } from "@hashgraph/sdk";
 import { Account } from "@ledgerhq/types-live";
 import { Transaction } from "../types";
@@ -41,8 +42,10 @@ export interface AccountBalance {
 }
 
 export async function getAccountBalance(address: string): Promise<AccountBalance> {
+  console.log({ address });
   const accountId = AccountId.fromString(address);
-  let accountBalance;
+  console.log({ accountId });
+  let accountBalance: HederaAccountBalance;
 
   try {
     accountBalance = await new AccountBalanceQuery({

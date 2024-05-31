@@ -23,6 +23,7 @@ const getAccountShape: GetAccountShape = async (info): Promise<Partial<Account>>
     derivationMode,
   });
 
+  console.log({ getAccountShapeAddress: address });
   // get current account balance
   const accountBalance = await getAccountBalance(address);
 

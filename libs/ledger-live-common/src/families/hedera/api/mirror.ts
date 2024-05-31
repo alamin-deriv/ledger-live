@@ -22,26 +22,30 @@ export interface Account {
 }
 
 export async function getAccountsForPublicKey(publicKey: string): Promise<Account[]> {
-  let r;
+  console.log({ publicKey });
   try {
-    r = await fetch(`/api/v1/accounts?account.publicKey=${publicKey}&balance=false`);
+    const response = await fetch(`/api/v1/accounts?account.publicKey=${publicKey}&balance=false`);
+    const rawAccounts = response.data.accounts;
+    const accounts: Account[] = [];
+
+    for (const raw of rawAccounts) {
+      console.log({ raw });
+      const accountBalance = await getAccountBalance(raw.account);
+
+      accounts.push({
+        accountId: AccountId.fromString(raw.account),
+        balance: accountBalance.balance,
+      });
+    }
+
+    return accounts;
   } catch (e: any) {
-    if (e.name === "LedgerAPI4xx") return [];
+    if (e.name === "LedgerAPI4xx") {
+      return [];
+    }
+
     throw e;
   }
-  const rawAccounts = r.data.accounts;
-  const accounts: Account[] = [];
-
-  for (const raw of rawAccounts) {
-    const accountBalance = await getAccountBalance(raw.account);
-
-    accounts.push({
-      accountId: AccountId.fromString(raw.account),
-      balance: accountBalance.balance,
-    });
-  }
-
-  return accounts;
 }
 
 interface HederaMirrorTransaction {
