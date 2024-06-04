@@ -210,6 +210,7 @@
     "styled-components": "^5.3.3",
     "styled-system": "^5.1.5",
     "text-encoding-polyfill": "^0.6.7",
+    "util.promisify": "^1.1.2",
     "uuid": "^8.3.2"
   },
   "devDependencies": {

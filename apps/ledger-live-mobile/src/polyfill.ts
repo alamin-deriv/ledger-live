@@ -26,6 +26,8 @@ import "@formatjs/intl-relativetimeformat/locale-data/tr";
 import "@formatjs/intl-relativetimeformat/locale-data/ja";
 import "@formatjs/intl-relativetimeformat/locale-data/ko";
 
+import util from "util";
+
 // Fix error when adding Solana account
 import "@azure/core-asynciterator-polyfill";
 
@@ -53,6 +55,22 @@ Promise.allSettled =
           })),
       ),
     ));
+
+util.promisify = (fn: (...args: any[]) => any) => {
+  const promisified = (...args: any[]) => {
+    return new Promise((resolve, reject) => {
+      fn(...args, function (err: Error, res: any) {
+        if (err) {
+          return reject(err);
+        }
+        return resolve(res);
+      });
+    });
+  };
+
+  promisified.custom = util.promisify.custom; // Add the 'custom' property
+  return promisified;
+};
 
 process.browser = true; // for readable-stream/lib/_stream_writable.js
 

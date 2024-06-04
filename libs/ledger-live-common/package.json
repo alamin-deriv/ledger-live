@@ -130,7 +130,7 @@
     "@dfinity/principal": "^0.15.6",
     "@elrondnetwork/erdjs": "11.0.0",
     "@elrondnetwork/erdjs-network-providers": "^1.1.2",
-    "@hashgraph/sdk": "^2.10.1",
+    "@hashgraph/sdk": "^2.45.0",
     "@keplr-wallet/cosmos": "^0.9.16",
     "@keplr-wallet/proto-types": "^0.12.76",
     "@ledgerhq/coin-algorand": "workspace:^",
